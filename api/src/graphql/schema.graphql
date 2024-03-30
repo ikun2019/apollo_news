@@ -3,6 +3,15 @@ type Query {
 	links: [Link]!
 }
 
+type Mutation {
+	post(input: PostInput!): Link!
+}
+
+input PostInput {
+	url: String!
+	description: String!
+}
+
 type Link {
 	id: ID!
 	description: String!
