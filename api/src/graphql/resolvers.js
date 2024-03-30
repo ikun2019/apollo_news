@@ -1,20 +1,19 @@
-let links = [];
-
 export const resolvers = {
   Query: {
     info: () => 'Hello World!',
-    links: () => links
+    links: async (parent, args, context) => {
+      return context.prisma.link.findMany();
+    }
   },
   Mutation: {
-    post: (parent, args, context) => {
-      const newId = links.length + 1;
-      const link = {
-        id: `link-${newId}`,
-        description: args.input.description,
-        url: args.input.url
-      };
-      links.push(link);
-      return link;
-    }
+    post: async (parent, args, context) => {
+      const newLink = await context.prisma.link.create({
+        data: {
+          description: args.input.description,
+          url: args.input.url
+        }
+      });
+      return newLink;
+    },
   }
 }
