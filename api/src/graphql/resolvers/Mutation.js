@@ -1,7 +1,7 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = 'secret';
+const { JWT_SECRET } = require('../../utils');
 
 // * sugnup mutation
 async function signup(parent, args, context) {
@@ -38,7 +38,21 @@ async function login(parent, args, context) {
   };
 }
 
+// * post mutation
+async function post(parent, args, context) {
+  const { userId } = context;
+  const newLink = await context.prisma.link.create({
+    data: {
+      url: args.input.url,
+      description: args.input.description,
+      postedBy: { connect: { id: userId } },
+    }
+  });
+  return newLink;
+};
 
 module.exports = {
   signup,
-}
+  login,
+  post,
+};
