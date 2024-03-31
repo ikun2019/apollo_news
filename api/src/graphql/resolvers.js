@@ -15,8 +15,5 @@ export const resolvers = {
       });
       return newLink;
     },
-    signup: async (parent, args, context) => {
-
-    },
   }
 }
