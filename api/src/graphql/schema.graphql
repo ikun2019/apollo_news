@@ -5,6 +5,8 @@ type Query {
 
 type Mutation {
 	post(input: PostInput!): Link!
+	signup(input: CreateUserInput!): AuthPayload!
+	login(input: LoginUserInput!): AuthPayload!
 }
 
 input PostInput {
@@ -12,8 +14,33 @@ input PostInput {
 	description: String!
 }
 
+input CreateUserInput {
+	name: String!
+	email: String!
+	password: String!
+}
+
+input LoginUserInput {
+	email: String!
+	password: String!
+}
+
 type Link {
 	id: ID!
 	description: String!
 	url: String!
+	postedBy: User
+}
+
+type AuthPayload {
+	token: String
+	user: User
+}
+
+type User {
+	id: ID!
+	name: String!
+	email: String!
+	password: String!
+	links: [Link!]!
 }
