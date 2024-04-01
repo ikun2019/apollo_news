@@ -11,12 +11,16 @@ const Mutation = require('./graphql/resolvers/Mutation.js');
 const User = require('./graphql/resolvers/User.js');
 const Link = require('./graphql/resolvers/Link.js');
 
+// * Subscriptions
+const { PubSub } = require('graphql-subscriptions');
+
 // * App
 const app = express();
 app.use(express.json(), cors());
 
 // * Prisma
 const prisma = new PrismaClient();
+const pubsub = new PubSub();
 
 // * GraphQL Schemaの読み込み
 const typeDefs = fs.readFileSync(path.join(__dirname, './graphql/schema.graphql'), 'utf-8');
@@ -35,6 +39,7 @@ const apolloServer = new ApolloServer({
   context: ({ req, res }) => ({
     ...req,
     prisma,
+    pubsub,
     userId: req && req.headers.authorization ? getUserId(req) : null,
   }),
 });
