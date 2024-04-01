@@ -8,7 +8,7 @@ async function signup(parent, args, context) {
   const hashedPassword = await bcrypt.hash(args.input.password, 10);
   const user = await context.prisma.user.create({
     data: {
-      ...args,
+      ...args.input,
       password: hashedPassword,
     }
   });
