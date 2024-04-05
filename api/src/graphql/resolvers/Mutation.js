@@ -40,6 +40,7 @@ async function login(parent, args, context) {
 
 // * post mutation
 async function post(parent, args, context) {
+  console.log('post mutation context =>', context);
   const { userId } = context;
   const newLink = await context.prisma.link.create({
     data: {
@@ -48,6 +49,8 @@ async function post(parent, args, context) {
       postedBy: { connect: { id: userId } },
     }
   });
+  // subscribeに送信する
+  context.pubsub.publish('NEW_LINK', newLink);
   return newLink;
 };
 
