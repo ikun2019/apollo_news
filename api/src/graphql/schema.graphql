@@ -7,6 +7,7 @@ type Mutation {
 	post(input: PostInput!): Link!
 	signup(input: CreateUserInput!): AuthPayload!
 	login(input: LoginUserInput!): AuthPayload!
+	vote(linkId: ID!): Vote
 }
 
 type Subscription {
@@ -34,6 +35,7 @@ type Link {
 	description: String!
 	url: String!
 	postedBy: User
+	votes: [Vote!]!
 }
 
 type AuthPayload {
@@ -47,4 +49,10 @@ type User {
 	email: String!
 	password: String!
 	links: [Link!]!
+}
+
+type Vote {
+	id: ID!
+	link: Link!
+	user: User!
 }
