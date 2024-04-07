@@ -66,6 +66,7 @@ async function vote(parent, args, context) {
       }
     }
   });
+  console.log(vote);
   if (Boolean(vote)) {
     throw new Error(`すでに投稿には投票されています:${args.linkId}`);
   };

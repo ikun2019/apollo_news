@@ -13,9 +13,10 @@ const { makeExecutableSchema } = require('@graphql-tools/schema');
 
 const Query = require('./graphql/resolvers/Query.js');
 const Mutation = require('./graphql/resolvers/Mutation.js');
+const Subscription = require('./graphql/resolvers/Subscriptions.js');
 const User = require('./graphql/resolvers/User.js');
 const Link = require('./graphql/resolvers/Link.js');
-const Subscription = require('./graphql/resolvers/Subscriptions.js');
+const Vote = require('./graphql/resolvers/Vote.js');
 
 // * Subscriptions
 const { PubSub } = require('graphql-subscriptions');
@@ -41,6 +42,7 @@ const resolvers = {
   Subscription,
   User,
   Link,
+  Vote,
 };
 
 const schema = makeExecutableSchema({ typeDefs, resolvers }); // graphqlのスキーマ言語ではなくjsコードでスキーマを定義
